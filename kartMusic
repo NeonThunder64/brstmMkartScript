@@ -1,0 +1,89 @@
+#!/bin/bash
+
+conditionA="f_"
+conditionB="volume_"
+
+
+echo -e "Welcome to Kart Music Plus"
+echo "Program Getting Ready Stand By Don't Touch Anything..."
+    sleep 3
+    for g in *.wav; do
+    echo "Processing $g file volume.."
+    Agame="volume_"$g
+    ffmpeg -i $g -filter:a "volume=1.5" $Agame  #Use a string to cacinate the new file name and the ext
+
+    done
+
+clear
+echo "Volume Upgraded Please Wait..."
+    sleep 5
+
+clear
+
+    for h in *.wav; do ##Format the files with
+
+    if [[ "$h" = "$conditionB"* ]]
+    then
+    echo "Processing $h file speed.."
+    name="f_"$h
+    ffmpeg -i $h -filter:a "atempo=2.0" -vn $name
+    fi
+    done
+    clear
+    echo "Speed Upgraded Please Wait..."
+        sleep 5
+clear
+
+
+echo "Please Be Ready to enter the new file names so they match the track names..."
+    sleep 5
+clear
+for y in *.wav; do ##Format the files with
+
+
+if [[ "$y" = "$conditionA"* ]] || [[ "$y" = "$conditionB"* ]]
+then
+echo "Please enter the trackfile name for $y >>>WITHOUT<<< the .wav ext at the end: "
+read realname
+
+if [[ "$y" = "$conditionA"* ]]
+then
+  bubble=$realname"_f"
+  cp $y $bubble
+  mv $bubble ~/bin/wii/testmenu/yourmusic
+fi
+
+if [[ "$y" = "$conditionB"* ]]
+then
+  cp $y $realname
+
+  mv $realname ~/bin/wii/testmenu/yourmusic
+  fi
+fi
+done
+
+
+clear
+
+echo "Cleaning Up temp file..."
+sleep 3
+  rm f_*
+  rm volume_*
+
+
+echo "Moving To yourmusic dirctory and formating wav files to brstm files  "
+
+cd yourmusic
+pwd
+sleep 3
+
+for a in *.wav; do
+brstm_converter $a -o $a.brstm -l 40000 -c 2
+done
+
+clear
+
+echo "All done Please put the brstm files in our my stuff folder"
+
+
+##Format the files with the wii comand line tool make sure the names are the same to ensure the files are fromated correctly
